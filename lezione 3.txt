@@ -1,0 +1,46 @@
+lezione 3
+
+Esercizio [gradi]
+Il primo algoritmo ORD che abbiamo visto per l'ordinamento topologico può essere implementato in modo che
+abbia complessità O(n + m). Assumendo che il DAG sia rappresentato tramite liste di adiacenza (cioè, per ogni
+nodo è data la lista degli adiacenti uscenti), descrivere una implementazione così efficiente dell'algoritmo.
+
+
+
+ORD(G: grafo diretto aciclico)
+	L <- lista vuota
+	WHILE c'è almeno un nodo in G DO
+		trova un nodo v senza archi entranti e rimuovilo da G
+		L.append(v)
+	RETURN L
+
+
+		|
+		| (modificato)
+		|
+		V
+
+
+ORD_MOD(G: grafo diretto aciclico)
+	L = []
+	last = NULL
+	for v in V(G){
+		if v.uscenti == []{
+			last = v
+		}
+	}		// trovato ultimo nodo 
+	stack = []
+	stack.push(last)
+	aux(stack, G, L)
+
+aux(stack, G, L)
+	while stack is not empty{
+		w = stack.top()
+		for w in v.entranti{
+			L += [w]
+			stack.push(w)
+		}
+		stack.pop()
+	}
+
+	//il costo computazionale dell'algoritmo è quello del dfs (O(n+m))
