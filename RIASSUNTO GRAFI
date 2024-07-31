@@ -1,0 +1,212 @@
+RIASSUNTO GRAFI
+
+
+def DFS(G)
+
+	vis = [0...0]
+	stack = []
+	x = random(V(G))
+	stack.push(x)
+	vis[x] = 1
+	while stack is not empty{
+		v = stack.top()
+		for w in v.adjacents(){
+			if vis[w] == 0{
+				stack.push(w)
+				vis[w] = 1
+			}
+		}
+		stack.pop()
+	}
+	return
+
+//O(N+M)
+
+-----------------------------------------------------
+
+def DFS_RICORSIVO(G, x = random(V(G)), vis = [0...0])
+	
+	vis[x] = 1
+	for w in x.adjacents(){
+		if vis[w] == 0{
+			DFS_RICORSIVO(G, w, vis)
+		}
+	}
+
+//O(N+M)
+
+-----------------------------------------------------
+
+def DFS_CON_CONTATORE(G)
+	
+	vis[0...0]
+	stack = []
+	CC = [[t1, T1]...[tn, Tn]]
+	Counter = 0
+	x = random(V(G))
+	stack.push(x)
+	while stack is not empty{
+		v = stack.top()
+		v.CC[t] = counter
+		counter ++
+		for w in v.adjacents(){
+			if vis[w] == 0{
+				stack.push(w)
+			}
+		}
+		v.CC[T] = contatore
+		stack.pop()
+	}
+	return CC
+
+//O(N+M)
+
+-----------------------------------------------------
+
+def DFS_CON_CONTATORE_RICOCORSIVO(G, CC, counter = 0, vis = [0...0], x = random(V(G)))
+	
+	vis[x] = 1
+	x.CC[t] = counter
+	counter ++
+	for w in x.adjacents(){
+		if vis[w] == 0{
+			DFS_CON_CONTATORE_RICOCORSIVO(G, CC, counter, vis, w)
+		}
+	}
+	x.CC[T] = counter
+
+//O(N+M)
+
+-----------------------------------------------------
+
+def TROVARE_CICLO(G, P = [0...0], v = random(V(G)), x = v)
+
+	P[v] = -x
+	for w in v.adjacents(){
+		if P[w] == 0 {
+			P[w] = TROVARE_CICLO(G, P, w, v, vis)
+		}
+		else if P[w] < 0{
+			if w != v{
+				P[w] = 0
+				P[v] = x
+				return x
+			}
+		}
+	}
+	return x
+	
+//O(N+M)
+
+def IDENTIFICA_CICLO(P //vettore dei padri)
+
+	cycle = []
+	while P[i] is not 0{
+		i++	
+		}
+	cycle += [i]
+	if i == N{
+		return FALSE
+	}
+	else{
+		j = 0
+		while true{
+			while P[j] != i and j < N{
+				j++
+			}
+			cycle += [j]
+			i = j
+			j = 0
+		}
+	}
+	return cycle
+
+-----------------------------------------------------
+
+def TROVA_COMPONENTI(v, c, G)
+	Comp[v] = c 
+	for w in v.adjacents{
+		TROVA_COMPONENTI(w, c, G)
+	}
+
+def AUX(G)
+	Comp = [0...0]
+	counterComp = 0
+	for v in V(G)
+		if Comp[v] == 0{
+			counterComp ++
+			TROVA_COMPONENTI(v, conterComp,G)
+		}
+	}
+
+//O(N+M)
+
+-----------------------------------------------------
+
+def TROVA_TOPOLOGICO(v, G, ord)
+	vis[v] = 1
+	for w in v.adjacents(){
+		if vis[w] == 0{
+			TROVA_TOPOLOGICO(v, G)
+		}
+	}
+	ord.insert(v)
+
+
+def AUX(G)
+	ord = []
+	vis = [0...0] 
+	for v in V(G)
+		if vis[v] == 0{
+			TROVA_TOPOLOGICO(v, G, ord)
+		}
+	}
+	return ord
+
+//O(N+M)
+
+-----------------------------------------------------
+
+def POZZO_UNIVERSALE(G //rappresentato come matrice di adiacenza){
+	x = random(V(G))
+	i = 0
+	while i != N{
+		if G[x][i] == 0{
+			i++
+		}
+		else x = i
+	}
+
+	while i != N{
+		if G[i][x] == 1 and G[x][i] == 0
+		i++
+	}
+	return x
+}
+
+//O(N+M)
+
+-----------------------------------------------------
+
+def TROVA_PONTI(G, x = random(V(G)), v = x, ponti = [], t = [0...0], c)
+	t[x] = c 
+	c++
+	back = t[x]
+	for w in x.adjacents(){
+		if t[w] == 0{
+			b = TROVA_PONTI(G, w, v ponti, t, c)
+			back = min(b, back)
+		}
+		else if (w != z){
+			back = min(t[w], back)
+		}
+	}
+	if back == t[x]
+		ponti += [(x,v)]
+	return back
+
+//O(N+M)
+
+-----------------------------------------------------
+
+def TROVA_SCC(G, x = random(V(G)), v = x, ponti = [], P = [0...0], c)

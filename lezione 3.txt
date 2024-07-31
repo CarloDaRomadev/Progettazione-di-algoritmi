@@ -37,10 +37,10 @@ aux(stack, G, L)
 	while stack is not empty{
 		w = stack.top()
 		for w in v.entranti{
-			L += [w]
 			stack.push(w)
 		}
 		stack.pop()
+		L += [w]
 	}
 
 	//il costo computazionale dell'algoritmo è quello del dfs (O(n+m))
