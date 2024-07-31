@@ -188,10 +188,10 @@ def POZZO_UNIVERSALE(G //rappresentato come matrice di adiacenza){
 
 -----------------------------------------------------
 
-def TROVA_PONTI(G, x = random(V(G)), v = x, ponti = [], t = [0...0], c)
-	t[x] = c 
+def TROVA_PONTI(G, x = random(V(G)), v = x, ponti = [], t = [0...0], c = 0)
+	back <= t[x]
 	c++
-	back = t[x]
+	t[x] = c
 	for w in x.adjacents(){
 		if t[w] == 0{
 			b = TROVA_PONTI(G, w, v ponti, t, c)
