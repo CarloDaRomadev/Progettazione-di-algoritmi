@@ -1,4 +1,11 @@
-RIASSUNTO GRAFI
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+-RIASSUNTO GRAFI:
+
+
 
 
 def DFS(G)
@@ -124,12 +131,14 @@ def IDENTIFICA_CICLO(P //vettore dei padri)
 -----------------------------------------------------
 
 def TROVA_COMPONENTI(v, c, G)
+
 	Comp[v] = c 
 	for w in v.adjacents{
 		TROVA_COMPONENTI(w, c, G)
 	}
 
 def AUX(G)
+
 	Comp = [0...0]
 	counterComp = 0
 	for v in V(G)
@@ -144,6 +153,7 @@ def AUX(G)
 -----------------------------------------------------
 
 def TROVA_TOPOLOGICO(v, G, ord)
+
 	vis[v] = 1
 	for w in v.adjacents(){
 		if vis[w] == 0{
@@ -154,6 +164,7 @@ def TROVA_TOPOLOGICO(v, G, ord)
 
 
 def AUX(G)
+
 	ord = []
 	vis = [0...0] 
 	for v in V(G)
@@ -167,7 +178,8 @@ def AUX(G)
 
 -----------------------------------------------------
 
-def POZZO_UNIVERSALE(G //rappresentato come matrice di adiacenza){
+def POZZO_UNIVERSALE(G //rappresentato come matrice di adiacenza)
+
 	x = random(V(G))
 	i = 0
 	while i != N{
@@ -182,16 +194,17 @@ def POZZO_UNIVERSALE(G //rappresentato come matrice di adiacenza){
 		i++
 	}
 	return x
-}
+
 
 //O(N+M)
 
 -----------------------------------------------------
 
-def TROVA_PONTI(G, x = random(V(G)), v = x, ponti = [], t = [0...0], c = 0)
-	back <= t[x]
+def TROVA_PONTI(G, x = random(V(G)), v = x, ponti = [], t = [0...0], c)
+
+	t[x] <= c 
 	c++
-	t[x] = c
+	back = t[x]
 	for w in x.adjacents(){
 		if t[w] == 0{
 			b = TROVA_PONTI(G, w, v ponti, t, c)
@@ -209,4 +222,137 @@ def TROVA_PONTI(G, x = random(V(G)), v = x, ponti = [], t = [0...0], c = 0)
 
 -----------------------------------------------------
 
-def TROVA_SCC(G, x = random(V(G)), v = x, ponti = [], P = [0...0], c)
+def TROVA_SCC(G, x = random(V(G)), v = x, t = [0...0], c, C = stack, counterSCC = 0)
+
+	c ++
+	t[x] = - c
+	back = - t[x]
+	C.push(x)
+	for w in x.adjacents{
+		if t[w] == 0
+			b = TROVA_SCC(G, w, x, t, c, C, counterSCC)
+			back = min(b,back)
+		if t[w] < 0
+			back = min(back, -t[w])
+	}
+	if back == -t[x]{
+		counterSSC ++
+		while y = stack.pop() != x
+			t[y] = counterSSC
+	}
+	return back
+
+//O(N+M)
+
+-----------------------------------------------------
+
+def BFS(G, x = random(V(G)))
+
+	queue = []
+	d = 0
+	dist = [0...0]
+	P = [-1,...,-1] 						//vettore dei padri
+	queue.enqueue(x)
+	dist[x] = 0
+	P[x] = x
+	while queue is not empty{
+		x = queue.dequeue()
+		for w in x.adjacents(){
+			if P[w] == -1{
+				dist[w] = dist[x] + 1
+				P[w] = x
+				queue.enqueue(w)
+			}
+		}
+	}
+	return P, dist
+
+//O(N+M)
+
+-----------------------------------------------------
+
+def BFS_INSIEMI(G, x = random(V(G), X, Y)
+
+	//inserisco tutti i nodi di X in queue
+	queue = []
+	dist = [-1,...,-1]
+	for x in X{
+	dist[x] = 0
+	queue.enqueue(x)
+	while queue is not empty{
+		v = queue.dequeue()
+		for w in v.adjacents(){
+			if dist[w] == -1{
+				dist[w] = dist[x] + 1
+			}
+		}
+	}
+	for y in Y{
+		min = infinite
+		if dist[y] < min{
+			min = dist[y]
+		}
+	}
+	return min
+
+//O(N+M)
+
+-----------------------------------------------------
+
+def DIST_RIC(P, dist, y)
+
+	if P[y] == y{
+		dist[y] = 0
+		return 0
+	}
+	if P[y] > 0{
+		dist[y] = dist[P[y]] + 1
+		retutn dist[y]
+	}
+	dist[y] = DIST_RIC(P, dist, P[y]) + 1
+	return dist[y]
+
+def AUX(P, dist)
+
+	for y in P{
+		DIST_RIC(P, dist, y)
+	}
+	return dist
+
+//O(n)
+
+---------------------------------------------------
+
+def DIJSKRA(G, y)
+	
+	heap = []
+	P = [0...0]
+	dist = [infinito...infinito]
+	for x in G{
+		dist[x] = 0
+		if x != y{
+			heap = [x, infinito]
+		}
+		else{
+			heap += [x, 0]
+			P[x] = x
+		}
+	}
+	while heap is not empty{
+		v = min(heap)
+		for w in v.adjacents(){
+			if dist[w] > dist[v] + d(w,v){
+				dist[w] = dist[v] + d(w,v)
+				heap.update(w)
+				P[w] = v
+			}
+		}
+		heap.remove(v)
+	}
+
+//O((N+M)*log(N))
+
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
