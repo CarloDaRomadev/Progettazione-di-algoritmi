@@ -1,0 +1,18 @@
+esercizi grafi
+
+def cerca_cicli(G, P = [0,...,0], x = random(V(G)), z = x){
+	P[x] = -z
+	for w in x.adiacenti(){
+		if P[w] == 0{
+			p[w] = cerca_cicli(G, P, w, x)
+		}
+		if P[w] < 0 and w != x{
+			P[w] = 0
+			p[x] = z
+			return x
+		}
+	}
+	P[x] = -P[x]
+	return 0
+}
+

@@ -91,17 +91,22 @@ def TROVARE_CICLO(G, P = [0...0], v = random(V(G)), x = v)
 	P[v] = -x
 	for w in v.adjacents(){
 		if P[w] == 0 {
-			P[w] = TROVARE_CICLO(G, P, w, v, vis)
+			z = TROVARE_CICLO(G, P, w, v)
+			if z != 0{
+				P[v] = -P[v]
+				return z
+			}
 		}
 		else if P[w] < 0{
 			if w != v{
 				P[w] = 0
 				P[v] = x
-				return x
+				return v
 			}
 		}
 	}
-	return x
+	P[v] = x
+	return 0
 	
 //O(N+M)
 
