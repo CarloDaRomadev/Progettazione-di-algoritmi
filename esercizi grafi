@@ -204,3 +204,212 @@ def Identifica_archi(G)
 	}
 	return annanze, arrete, attraversamento
 
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+ALGORITMO CHE OPERA IN O((n+m)log(n))
+
+def Opt_Dijkstra(G, x, y)
+	dist = [inf,...,inf]
+	dist[x] = 0
+	haep = [value, key]
+	heap.add(x, 0)
+	for v in V(G){
+		if v != x{
+			heap.add(v, inf)
+		}
+	}
+	while queue is not empty{
+		v = min(heap.key)
+		for w in v.adiacenti{
+		if dist[w] > dist[v] + d(v,w){
+			dist[w] = dist[v] + d(v,w)
+			w.update_key(dist[v] + d(v,w))
+			}
+		}
+		heap.remove(v)
+	}
+	return dist[y]
+
+
+ALGORITMO CHE OPERA IN O((n+m)n)
+
+def unOpt_Dijkstra(G,x)
+	dist = [0,...,0]
+	dist[x] = 0
+	R += [x]
+	while R != V(G){
+		min = infinito
+		min_arco = null
+		for (x,y) | x in R and y not in R{
+			if dist[x] + d(x,y) < min{
+				min = dist[x] + d(x,y)
+				min_arco = (x,y)
+			}
+		}
+		R.add(min_arco[1])
+		dist[min_arco[1]] = min
+	}
+	return dist[y]
+
+riscrivo per esercizio
+ALGORITMO CHE OPERA IN O((n + m)log(n))
+	def unopt_dijskra(G, x){
+	R = []
+	dist = [0,...,0]
+	R += [x]
+	dist[x] = 0
+	while R != V(G){
+		min  = infinito
+		min_arco = null
+		for (x, y) | x in R && y not in R{
+			if dist[x] + d(x, y) > min{
+				min dist[x] + d(x, y)
+				min_arco = (x, y)
+			}
+		}
+		R += [min_arco[1]]
+		dist[y] = min
+	}
+	return dist
+
+
+ALGORITMO CHE OPERA IN O((n+m)log(n))
+
+def Opt_Dijkstra(G, x){
+	dist = [infinito,...,infinito]
+	heap = [value, key]
+	heap.add(x,0)ù
+	for v in V(G){
+		if v != x{
+		heap.add(v, inf)
+	}
+	while heap is not empty(){
+		v = heap.min(key)
+		for w in v.top(){
+			if dist[v] + d(v, w) < dist[w]{
+				dist[w] = dist[v] + d(v,w)
+				w.update_key(dist[v] + d(v,w))
+			}
+		}
+		heap.remove(v)
+	}
+	return dist
+}
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+14 marzo 2024 - esercizio 5 #21
+
+1)
+def OrdineTopologico(G, vis = [0...0])
+	ordine = []
+	for x in v(G){
+		if vis[x] != 0{
+			ordina(G, vis, x)
+		}
+	}
+	return ordine
+
+def ordina(G, vis, x, ordine)
+	vis[x] = 1
+	for w in v.adiacenti(){
+		if vis[w] == 0{
+			ordina(G, vis, w)
+		}
+	}
+	ordine.insert(x)
+
+
+//O(n+m)
+
+2)
+def OrdineTopologicoALL(G, vis = [0...0], P = [[]...[]])	//P è una lista di liste
+	ordine = []
+	for x in v(G){
+		if vis[x] != 0{
+			trovaPadriPossibili(G, vis, x, P)
+		}
+	}
+	combina(P)
+
+def trovaPadriPossibili(G, vis, x, P)		//P è una lista di liste
+	vis[x] = 1
+	for w in v.uscenti(){
+		if vis[w] == 0{
+			trovaPadriPossibili(G, vis, w, P)
+			
+		}
+	}
+	P[x].append(x.entranti)					//questa funzione ha lo scopo di modificare P
+
+
+def combina(P)
+
+//NO
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+numero di cammini minimi #24
+
+//per prima cosa trovo ""la misura"" del cammino minimo
+def bfs(G: grafo, x : nodo_radice) -> list {
+	dist = [0,...,0]
+	queue = [] //inizializzo una coda
+	queue.enqueue(x)
+	dist[x] = 0
+	while queue is not empty{
+		v = queue.dequeue()
+		for w in v.adiacenti(){
+			if dist[w] == 0 && w != x {
+				queue.enqueue(w)
+				dist[w] = dist[v] + 1
+			}
+		}
+		queue.dequeue(v)
+	}
+	return dist
+}
+
+
+//conto ora i nodi adiacenti a y con distanza da x uguale alla distanza tra x e y -1
+def analizza_dist(G, x, y) -> int
+	dist = bfs(G: grafo, x : nodo_radice)
+	min_dist_x_y = dist[y]
+	count = 0
+	for w in y.adiacenti{
+		if dist[w] == min_dist_x_y - 1{
+			count ++
+		}
+	}
+	return count
+
+//costo finale = O(n+m)
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+componenti fortemente connesse 💪 #16
+
+def componenti_fortemente_connesse(G, comp = [0...0], c = 0,cc = 0, C = "stack", x = random(V(G)), z = x //padre di x)
+	comp[x] = -z
+	c++
+	back = c
+	comp[x] = -c
+	C += [x]
+	for w in v.adiacenti(){
+		if comp[w] == 0{
+			C += [w]
+			b = componenti_fortemente_connesse(G, comp, c++, cc, C, w, v)
+			back = min(b, back)
+		}
+		else if comp[w] < 0{
+			if w != z{
+				back = min(back, -comp[w])
+			}
+		}
+	}
+	if back == -comp[v]{
+		cc++
+		while C.pop() != v{
+			comp[C.pop()] = cc
+		}
+	}
+	return back
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
