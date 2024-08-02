@@ -17,11 +17,13 @@ def DFS(G)
 	vis[x] = 1
 	while stack is not empty{
 		v = stack.top()
-		for w in v.adjacents(){
-			if vis[w] == 0{
-				stack.push(w)
-				vis[w] = 1
-			}
+		if vis[v.adiacenti[0]] == 0{
+			w = v.adiacenti[0]
+			stack.push(w)
+			vis[w] = 1
+		}
+		else{
+			v.adiacenti.remove[0]
 		}
 		stack.pop()
 	}
@@ -56,10 +58,12 @@ def DFS_CON_CONTATORE(G)
 		v = stack.top()
 		v.CC[t] = counter
 		counter ++
-		for w in v.adjacents(){
-			if vis[w] == 0{
-				stack.push(w)
-			}
+		if v.adiacenti[0] == 0{
+			w = v.adiacenti[0]
+			stack.push(w)
+		}
+		else{
+			v.adiacenti.remove[0]
 		}
 		v.CC[T] = contatore
 		stack.pop()

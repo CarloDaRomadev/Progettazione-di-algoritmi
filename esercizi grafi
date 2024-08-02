@@ -46,10 +46,9 @@ def aciclico_test(G){
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 5 marzo 2024 - esercizio 2 #3
 
-def DFS_biColorazione(G, color){
+def DFS_biColorazione(G, color, x){
 	C = 0
 	stack = []
-	x = random(V(G))
 
 	color[x] = C
 	cambia(C)							//funzione che fa diventare C = 1 se C == 0 e viceversa. O(1)
@@ -74,7 +73,7 @@ def bipartito_test(G){
 	color = [-1,...,-1]
     for v in V(G){
 	 	if color[v] == -1{
-	 		esito = DFS_biColorazione(G, color)
+	 		esito = DFS_biColorazione(G, color, x)
 	 	}
 	 	if esito == false{
 	 		return false
@@ -82,3 +81,126 @@ def bipartito_test(G){
 	}
 	return true
 }
+
+
+-----------------------------------------------------------------
+// versione ricorsiva
+
+def DFS_bicolorazione_rec(G, color, C, x)
+	color[x] = C
+	for w in x.adiacenti(){
+		if color[w] == -1{
+			DFS_bicolorazione_rec(G, color, cambia(C), w)
+		}
+		elif color[w] == color[x]{
+			return false
+		}
+	}
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+cicli #4
+
+def trova_ciclo(G, P = [-1,...,-1], v, x)
+	P[v] = x
+	for w in v.adiacenti(){
+		if P[w] == -1{
+			trova_ciclo(G, P, w, v)
+		}
+		else {
+			P[w] = 0
+			return v
+		}
+	}
+
+def identifica_ciclo(G)
+	z = trova_ciclo(G, P, v = random(V(G)), x = v)
+	ciclo = []
+	while z != 0{					
+		ciclo.append(z)
+		z = P[z]
+	}
+		return ciclo
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+cammini #5
+
+def esiste_cammino(G, x, y)
+	vis = [0,...,0]
+	stack = []
+	stack.push(x)
+	vis[x] = 1
+	while stack is not empty{
+		v = stack.pop()
+		for w in v.adiacenti(){
+			if vis[w] == 0{
+				vis[x] = 1
+				stack.push(w)
+			}
+			if w == y{
+				return true
+			}
+		}
+	}
+	return false
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+componenti connesse #6
+
+def componenti_connesse(G)
+	comp = [0,...,0]
+	C = 0
+	for v in V(G){
+		if comp[v] == 0{
+			assegna_componente(vis, comp, v, C++)
+		}
+	}
+	return comp
+
+def assegna_componente(vis, comp, v, C)
+	comp[v] = C
+	for w in v.adiacente(){
+		assegna_componente(vis, comp, w, C)
+	}
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+avanti, indietro & attraversamento #7
+
+def DFS_CON_CONTATORE_rec(G, CC, counter, x, vis, albero){
+	//CC = lista di liste da due elementi dove il primo elemento indica l'istante di apertura del nodo mentre il secondo elemento indica l'istante di chiusura del
+	
+	vis[x] = 1
+	x.CC[t] = counter
+	for w in x.adiacenti(){
+		if vis[w] == 0{
+			DFS_CON_CONTATORE(G, CC, counter++, w, vis)
+			albero += [(x, w)]
+		}
+	}
+	x.CC[T] = counter
+	}
+}
+return CC, albero
+
+//O(n+m)
+
+def Identifica_archi(G)
+	albero = []
+	CC, albero = DFS_CON_CONTATORE_rec(G, CC = [[t1, T1],...,[tn, Tn]], counter = 0, x = random(V(G)), vis = [0,...,0], albero = [])
+	annanze = [] 
+	arrete = []
+	attraversamento = []
+	for (x,y) in E(G) and not in albero{											//per ogni arco in E(G)
+		if (x.CC[t] < y.CC[t]) && (x.CC[T] >= y.CC[T]){								//se apro e chiudo y tra l'apertura e la chiusura di x
+			annaze += [(x,y)]
+		}
+		if (y.CC[t] < x.CC[t]) && (y.CC[T] >= x.CC[T]){								//se apro e chiudo x tra l'apertura e la chiusura di y
+			arrete += [(x,y)]
+		else{
+			attraversamento += [(x,y)]												//altrimenti
+		}
+	}
+	return annanze, arrete, attraversamento
+
