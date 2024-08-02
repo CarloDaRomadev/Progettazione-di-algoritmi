@@ -110,28 +110,13 @@ def TROVARE_CICLO(G, P = [0...0], v = random(V(G)), x = v)
 	
 //O(N+M)
 
-def IDENTIFICA_CICLO(P //vettore dei padri)
-
-	cycle = []
-	while P[i] is not 0{
-		i++	
-		}
-	cycle += [i]
-	if i == N{
-		return FALSE
-	}
-	else{
-		j = 0
-		while true{
-			while P[j] != i and j < N{
-				j++
-			}
-			cycle += [j]
-			i = j
-			j = 0
-		}
-	}
-	return cycle
+def IDENTIFICA_CICLO()
+	w <- DFS_CYCLE(G, u, u, P)
+	L <- lista vuota
+	WHILE w > 0 DO
+	L.append(w)
+	w <- P[w]
+	RETURN L
 
 -----------------------------------------------------
 
@@ -242,7 +227,7 @@ def TROVA_SCC(G, x = random(V(G)), v = x, t = [0...0], c, C = stack, counterSCC 
 	}
 	if back == -t[x]{
 		counterSSC ++
-		while y = stack.pop() != x
+		while y = C.pop() != x
 			t[y] = counterSSC
 	}
 	return back
