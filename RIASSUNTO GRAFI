@@ -242,7 +242,7 @@ def TROVA_SCC(G, x = random(V(G)), v = x, t = [0...0], c, C = stack, counterSCC 
 	}
 	if back == -t[x]{
 		counterSSC ++
-		while y = stack.pop() != x
+		while y = C.pop() != x
 			t[y] = counterSSC
 	}
 	return back
