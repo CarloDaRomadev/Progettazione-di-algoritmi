@@ -1,18 +1,84 @@
-esercizi grafi
+ESERCIZI GRAFI
 
-def cerca_cicli(G, P = [0,...,0], x = random(V(G)), z = x){
-	P[x] = -z
-	for w in x.adiacenti(){
+Un grafo diretto si dice diretto aciclico (DAG) se non contiene alcun ciclo diretto. Modificare l’algoritmo della ricerca
+in profondità in maniera da poter controllare se un grafo diretto è aciclico o no; è possibile fare questa modifica in modo che il controllo avvenga in O(n+m)?
+
+def cerca_cicli(G, P = [0,...,0], v = random(V(G)), x = v){  //aux
+	P[v] = -x
+	for w in v.adiacenti(){
 		if P[w] == 0{
-			p[w] = cerca_cicli(G, P, w, x)
+			z = cerca_cicli(G, P, w ,v)
+			if z != 0{
+				P[v] = - P[v]
+				return z
+			}
 		}
-		if P[w] < 0 and w != x{
-			P[w] = 0
-			p[x] = z
-			return x
+		else{
+			if w != x{
+				P[w] = 0
+				P[v] = x
+				return v
+			}
 		}
 	}
-	P[x] = -P[x]
+	P[v] = x
 	return 0
 }
 
+// costo = O(n + m)
+
+def aciclico_test(G){
+	P = [0,...,0]
+	cerca_cicli(G, P, v = random(V(G)), x = v)
+	i = 0
+	while P[i] != 0 && i != n{
+		i ++
+	}
+	if i == n{
+		return true
+	}
+	else{
+		return false
+	}
+}
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+5 marzo 2024 - esercizio 2 #3
+
+def DFS_biColorazione(G, color){
+	C = 0
+	stack = []
+	x = random(V(G))
+
+	color[x] = C
+	cambia(C)							//funzione che fa diventare C = 1 se C == 0 e viceversa. O(1)
+
+	stack.push(x)
+	while stack is not empty{
+		v = stack.pop()
+		for w in v.adiacenti(){
+			stack.push(w)
+			if color[w] == -1{
+				color[w] = C
+			}
+			elif color[w] == color[v]{
+				return false
+			}
+		}
+		cambia(C)					   //funzione che fa diventare C = 1 se C == 0 e viceversa. O(1)
+	return true
+}
+
+def bipartito_test(G){
+	color = [-1,...,-1]
+    for v in V(G){
+	 	if color[v] == -1{
+	 		esito = DFS_biColorazione(G, color)
+	 	}
+	 	if esito == false{
+	 		return false
+	 	}
+	}
+	return true
+}
