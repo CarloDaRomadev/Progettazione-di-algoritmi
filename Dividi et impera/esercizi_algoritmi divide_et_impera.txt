@@ -116,3 +116,124 @@ def singolo(A : array ordinato e di cardinalità dispari)
 		}
 		singolo(A[m:len(A)-1])
 	}
+
+---------------------------------------------------------------------------------------------------	
+
+def min_dist_piano(I : insieme di punti ordinati per la prima componente) //l'operazione di ordinamento in base al valore della prima componente può essere svolta in una funzine a parte ed ha costo = O(n(log(n)))
+	if len(I) == 0{return 0}
+	if len(I) == 1{return 0}
+	if len(I) == 2{return dist(I[0], I[1])}
+	if len(I) == 3{return min( dist(I[0],I[1]), dist(I[1],I[2]), dist(I[0],I[2]) )}
+	m = len(I) / 2
+	R = min_dist_piano(I[0 : m])
+	L = min_dist_piano(I[m+1 : (len(I)-1)])
+
+	lambda = min(R,L)
+	fascia = []
+	for x in I{
+		if m-lambda <= x <= m+lambda{
+			fascia.append(x)
+		}
+	}
+	ordina fascia per array					//l'operazione ha costo = O(n(log(n)))
+
+	S = NULL
+	for w in len(fascia){
+		for i in range 1-7{
+			S = min(S, dist(I[w],I[w+i]))
+		}
+	}
+
+	return min(S,L,R)
+
+---------------------------------------------------------------------------------------------------	
+
+def majority(a : array){
+	//definisco i casi base
+	if len(a) == 3{
+		if a[0] == a[1] or a[0] == a[2]{
+			return a[0]
+		}
+		if a[1] == a[2]{
+			return a[1]
+		}
+	}
+
+	if len(a) == 0{
+		return NULL
+	}
+
+	if len(a) == 1{
+		return a[0]
+	}
+	
+	if len(a) == 2{
+		if a[0] == a[1]{
+			return a[0]
+		}
+	}
+
+	m = len(a) / 2
+	L =	majority(a[0:m])
+	R = majority(a[m+1:len(a)-1])
+	count = 0
+
+	for i da 0 a len(a)-1{
+		if a[i] == L{
+			count ++
+		}
+	}
+	if count == (2/3)*(len(a)){
+		return L
+	}
+
+	count = 0
+
+	for i da 0 a len(a)-1{
+		if a[i] == R{
+			count ++
+		}
+	}
+	if count == (2/3)*(len(a)){
+		return R
+	}
+	return NULL
+}
+
+def check(a)
+	x = majority(a)
+	if x != null{
+		return "YES"
+	}
+	else return{
+		false
+	}
+
+---------------------------------------------------------------------------------------------------	
+
+def massimo_subarray(a : array){
+	n = len(a)
+	m = n/2
+	if n == 0{
+		return 0
+	}
+	if n == 1{
+		return a[0]
+	}
+	if n == 2{
+		return a[1] + a[0]
+	}
+	L = massimo_subarray(a[0:m])
+	R = massimo_subarray(a[m+1,n-1])
+	S = 0
+	for i da m a 0{
+		somma = S + a[i]
+		S = max(S,somma)
+	}
+
+	fot j da m+1 a n-1{
+		somma = S + a[j]
+		S = max(S,somma)
+	}
+	return max(R,L,S)
+}
